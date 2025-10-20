@@ -1,15 +1,54 @@
 <header class="main-header">
-        <div id="user-role-status" class="user-role-status"></div>
-        <nav class="container main-nav">
-            <a href="/" class="nav-logo">
-                <img src="resources/images/logo.png" alt="Sword Emporium Logo" class="logo-image">
-                <span>Sword Emporium</span>
-            </a>
-            <div class="nav-links">
-                <a href="/">Beranda</a>
-                <a href="/products">Produk</a>
-                <a href="/contact">Kontak</a>
+    {{-- Menampilkan status peran jika pengguna sudah login --}}
+    @if(auth.user)
+        <div id="user-role-status" class="user-role-status" style="background-color: #9e2a39; color: white; padding: 0.5rem 1rem; text-align: center; font-size: 0.9rem;">
+            Anda login sebagai:
+            {{-- Pengecekan peran untuk tampilan teks --}}
+            @if(auth.user.role === 'buyer')
+              Pembeli
+            @elseif(auth.user.role === 'seller')
+              Penjual
+            @else
+              {{ auth.user.role }} {{-- Fallback jika ada peran lain --}}
+            @endif
+        </div>
+    @endif
+    <nav class="container main-nav">
+        <a href="/" class="nav-logo">
+            <img src="resources/images/logo.png" alt="Sword Emporium Logo" class="logo-image">
+            <span>Sword Emporium</span>
+        </a>
+        {{-- Ini adalah bagian penting untuk link navigasi --}}
+        <div class="nav-links">
+            <a href="/">Beranda</a>
+            <a href="/products">Produk</a>
+            <a href="/contact">Kontak</a>
 
-            </div>
-        </nav>
-    </header>
+            {{-- Logika IF/ELSE untuk status login --}}
+            @if(auth.user)
+                {{-- JIKA SUDAH LOGIN --}}
+
+                {{-- Tampilkan Link Keranjang HANYA untuk 'buyer', dorong ke kanan --}}
+                {{-- PERUBAHAN DI SINI: 'Pembeli' menjadi 'buyer' --}}
+                @if(auth.user.role === 'buyer')
+                  <a href="/cart" style="margin-left: auto;">🛒 Keranjang</a>
+                @endif
+
+                {{-- Tombol Logout, beri sedikit jarak kiri jika ada keranjang, jika tidak dorong ke kanan --}}
+                {{-- PERUBAHAN DI SINI: 'Pembeli' menjadi 'buyer' --}}
+                <form action="/logout" method="POST" style="display: inline; margin-left: {{ auth.user.role === 'buyer' ? '1rem' : 'auto' }};">
+                    {{ csrfField() }}
+                    <button type="submit" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Logout</button>
+                </form>
+
+            @else
+                {{-- JIKA BELUM LOGIN (HANYA BLOK INI YANG JALAN) --}}
+                <a href="/register">Register</a>
+                <a href="/login">Login</a>
+            @endif
+            {{-- Akhir dari logika IF/ELSE --}}
+
+        </div>
+        {{-- Akhir dari div.nav-links --}}
+    </nav>
+</header>

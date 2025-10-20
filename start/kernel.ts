@@ -10,6 +10,7 @@
 
 import router from '@adonisjs/core/services/router'
 import server from '@adonisjs/core/services/server'
+// TIDAK ADA 'import { middleware }...' di sini
 
 /**
  * The error handler is used to convert an exception
@@ -36,14 +37,15 @@ router.use([
   () => import('@adonisjs/core/bodyparser_middleware'),
   () => import('@adonisjs/session/session_middleware'),
   () => import('@adonisjs/shield/shield_middleware'),
-  () => import('@adonisjs/auth/initialize_auth_middleware')
+  () => import('@adonisjs/auth/initialize_auth_middleware'),
+  () => import('#middleware/silent_auth_middleware') // Pastikan ini di akhir
 ])
 
 /**
  * Named middleware collection must be explicitly assigned to
  * the routes or the routes group.
  */
-export const middleware = router.named({
+export const middleware = router.named({ // Pastikan ada 'export' di sini
   guest: () => import('#middleware/guest_middleware'),
   auth: () => import('#middleware/auth_middleware')
 })

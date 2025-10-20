@@ -1,5 +1,5 @@
 {
-  "name": "SwordWEB",
+  "name": "swordweb",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -70,5 +70,19 @@
       "./app/middleware/*.ts"
     ]
   },
-  "prettier": "@adonisjs/prettier-config"
+  "prettier": "@adonisjs/prettier-config",
+  "description": "",
+  "main": "ace.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DutaSetyawan/SwordWeb.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/DutaSetyawan/SwordWeb/issues"
+  },
+  "homepage": "https://github.com/DutaSetyawan/SwordWeb#readme"
 }

@@ -1,0 +1,63 @@
+@layout.app({ title: 'Keranjang Belanja' })
+  @slot('main')
+    <main>
+        <section class="section">
+            <div class="container">
+                <h1 class="section-title">Keranjang Belanja Anda</h1>
+
+                @if(cart && cart.items.length > 0)
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <th style="text-align: left; padding: 1rem;">Produk</th>
+                                <th style="text-align: center; padding: 1rem;">Jumlah</th>
+                                <th style="text-align: right; padding: 1rem;">Harga Satuan</th>
+                                <th style="text-align: right; padding: 1rem;">Subtotal</th>
+                                <th style="padding: 1rem;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @each(item in cart.items)
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 1rem; display: flex; align-items: center; gap: 1rem;">
+                                        <img src="{{ item.product.imageUrl }}" alt="{{ item.product.name }}" style="width: 50px; height: auto; border-radius: 4px;">
+                                        <span>{{ item.product.name }}</span>
+                                    </td>
+                                    <td style="text-align: center; padding: 1rem;">
+                                        {{ item.quantity }}
+                                        
+                                    </td>
+                                    <td style="text-align: right; padding: 1rem;">Rp {{ item.product.price.toLocaleString('id-ID') }}</td>
+                                    <td style="text-align: right; padding: 1rem;">Rp {{ (item.product.price * item.quantity).toLocaleString('id-ID') }}</td>
+                                    <td style="text-align: center; padding: 1rem;">
+                                        <form action="#" method="POST"> 
+                                            {{ csrfField() }}
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" style="background: none; border: none; color: #ff4d4d; cursor: pointer;">Hapus</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @end
+                        </tbody>
+                    </table>
+
+                    <div style="text-align: right; margin-bottom: 2rem;">
+                        @eval(let total = cart.items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0))
+                        <h3 style="font-family: var(--font-heading); font-size: 1.5rem;">Total: Rp {{ total.toLocaleString('id-ID') }}</h3>
+                    </div>
+
+                    <div style="text-align: right;">
+                       <a href="/checkout" class="btn btn-primary">Lanjut ke Checkout</a>
+                    </div>
+
+                @else
+                    <p style="text-align: center; color: var(--text-secondary);">Keranjang belanja Anda masih kosong.</p>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <a href="/products" class="btn btn-primary">Lihat Produk</a>
+                    </div>
+                @endif
+            </div>
+        </section>
+    </main>
+  @endslot
+@end

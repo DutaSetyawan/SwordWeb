@@ -1,0 +1,40 @@
+@layout.app({ title: 'Register' })
+  @slot('main')
+    <main>
+        <section class="section">
+            <div class="container">
+                <h1 class="section-title">Buat Akun Baru</h1>
+                <div class="contact-form-container">
+                    <form action="/register" method="POST">
+                        {{ csrfField() }}
+                        <div class="form-group form-full-width">
+                            <label for="fullName">Nama Lengkap</label>
+                            <input type="text" id="fullName" name="fullName" class="form-input" required>
+                        </div>
+                        <div class="form-group form-full-width">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                        <div class="form-group form-full-width">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" class="form-input" required>
+                        </div>
+                        <div class="form-group form-full-width">
+                            <label for="role">Daftar sebagai:</label>
+                            <select name="role" id="role" class="form-input">
+                                <option value="Buyer">Buyer</option>
+                                <option value="Seller">Seller</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                Register
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+  @endslot
+@end

@@ -1,0 +1,34 @@
+@layout.app({ title: 'Login' })
+  @slot('main')
+    <main>
+        <section class="section">
+            <div class="container">
+                <h1 class="section-title">Login</h1>
+                 @if(flashMessages.has('error'))
+                    <div class="error-message" style="background-color: #9e2a39; color: white; padding: 1rem; text-align: center; border-radius: 8px; margin-bottom: 2rem;">
+                        {{ flashMessages.get('error') }}
+                    </div>
+                @endif
+                <div class="contact-form-container">
+                    <form action="/login" method="POST">
+                        {{ csrfField() }}
+                        <div class="form-group form-full-width">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                        <div class="form-group form-full-width">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" class="form-input" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                Login
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+  @endslot
+@end
